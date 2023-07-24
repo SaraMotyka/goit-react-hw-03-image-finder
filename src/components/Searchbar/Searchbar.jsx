@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import css from './Searchbar.module.css';
 import PropTypes from 'prop-types';
+import { SlMagnifier } from 'react-icons/sl';
 
 export class Searchbar extends Component {
   render() {
@@ -10,7 +11,9 @@ export class Searchbar extends Component {
         <header className={css.searchbar}>
           <form className={css.form} onSubmit={onSubmit}>
             <button type="submit" className={css.button__search}>
-              <span className={css.button__label}>Search</span>
+              <span className={css.button__label}>
+                <SlMagnifier />
+              </span>
             </button>
 
             <input

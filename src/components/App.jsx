@@ -2,11 +2,11 @@ import React from 'react';
 import axios from 'axios';
 import Notiflix from 'notiflix';
 
-import { Searchbar } from './Searchbar/Searchbar';
-import { ImageGallery } from './ImageGallery/ImageGallery';
-import { Button } from './Button/Button';
-import { Loader } from './Loader/Loader';
-import { Modal } from 'components/Modal/Modal';
+import Searchbar from './Searchbar/Searchbar';
+import ImageGallery from './ImageGallery/ImageGallery';
+import Button from './Button/Button';
+import Loader from './Loader/Loader';
+import Modal from './Modal/Modal';
 
 export class App extends React.Component {
   state = {
@@ -16,6 +16,7 @@ export class App extends React.Component {
     isLoading: false,
     isModal: false,
     modalData: {},
+    showLoadMore: false,
   };
 
   request = {
@@ -24,21 +25,16 @@ export class App extends React.Component {
     per_page: 12,
   };
 
-  showLoadMore = false;
-
-  onSubmit = e => {
+  onSubmit = async e => {
     e.preventDefault();
     const value = e.target.search.value;
 
     if (value.trim()) {
-      this.setState(prevState => {
-        if (prevState.value !== value) {
-          return {
-            value: value.trim(),
-            page: 1,
-            images: [],
-          };
-        }
+      this.setState({
+        value: value.trim(),
+        page: 1,
+        images: [],
+        showLoadMore: false,
       });
     } else {
       Notiflix.Notify.failure('The field cannot be empty.');
@@ -65,7 +61,7 @@ export class App extends React.Component {
       try {
         const response = await axios.get(`${API}?${searchParams}`);
         if (!response.data.totalHits) {
-          this.showLoadMore = false;
+          this.setState({ showLoadMore: false });
 
           Notiflix.Notify.failure(
             'Sorry, there are no images matching your search query. Please try again.'
@@ -83,16 +79,16 @@ export class App extends React.Component {
           }
 
           if (per_page * this.state.page >= response.data.totalHits) {
-            this.showLoadMore = false;
+            this.setState({ showLoadMore: false });
             Notiflix.Notify.warning(
               "We're sorry, but you've reached the end of search results."
             );
           } else {
-            this.showLoadMore = true;
+            this.setState({ showLoadMore: true });
           }
         }
       } catch (error) {
-        this.showLoadMore = false;
+        this.setState({ showLoadMore: false });
         Notiflix.Notify.failure(
           'Sorry, some error on the server. Please try again.'
         );
