@@ -4,17 +4,15 @@ import PropTypes from 'prop-types';
 
 export class ImageGalleryItem extends Component {
   render() {
-    const { webformatURL, largeImageURL, tags, onClickImage } = this.props;
     return (
       <div>
         <li className={css.gallery__item}>
           <img
             className={css.gallery__image}
             width="300px"
-            data-bg-image={largeImageURL}
-            src={webformatURL}
-            alt={tags}
-            onClick={onClickImage}
+            src={this.props.item.webformatURL}
+            alt={this.props.item.alt}
+            onClick={this.props.onClickImage}
           />
         </li>
       </div>
