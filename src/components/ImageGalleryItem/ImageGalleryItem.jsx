@@ -11,15 +11,16 @@ export class ImageGalleryItem extends Component {
             className={css.gallery__image}
             width="300px"
             src={this.props.item.webformatURL}
-            alt={this.props.item.alt}
+            alt={this.props.item.tags}
             onClick={this.props.onClickImage}
+            data-bgimage={this.props.item.largeImageURL}
+            data-alt={this.props.item.tags}
           />
         </li>
       </div>
     );
   }
 }
-
 ImageGalleryItem.propTypes = {
   largeImageURL: PropTypes.string,
   webformatURL: PropTypes.string,

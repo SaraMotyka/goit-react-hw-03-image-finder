@@ -15,7 +15,6 @@ export class App extends React.Component {
     value: '',
     isLoading: false,
     isModal: false,
-    modalData: {},
   };
 
   request = {
@@ -25,6 +24,7 @@ export class App extends React.Component {
   };
 
   showLoadMore = false;
+  modalData = {};
 
   onSubmit = e => {
     e.preventDefault();
@@ -110,9 +110,12 @@ export class App extends React.Component {
 
   onClickImage = e => {
     document.addEventListener('keydown', this.keyDown);
+    this.modalData = {
+      img: e.target.dataset.bgimage,
+      alt: e.target.dataset.alt,
+    };
     this.setState({
       isModal: !this.state.isModal,
-      modalData: { img: e.target.dataset.bgImage, alt: e.target.alt },
     });
   };
 
@@ -149,7 +152,7 @@ export class App extends React.Component {
         )}
         {this.state.isLoading && <Loader />}
         {this.state.isModal && (
-          <Modal data={this.state.modalData} closeModal={this.closeModal} />
+          <Modal data={this.modalData} closeModal={this.closeModal} />
         )}
       </>
     );

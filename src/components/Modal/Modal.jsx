@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 
 export class Modal extends Component {
   render() {
-    const { img, alt, closeModal } = this.props;
+    const {
+      data: { img, alt },
+      closeModal,
+    } = this.props;
+    console.log(img, alt, closeModal);
     return (
       <div className={css.overlay} onClick={closeModal}>
         <div className={css.modal}>
